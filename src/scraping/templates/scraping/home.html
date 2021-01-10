@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+
+        {% block content %}
+
+
+{% for obj in object_list %}
+
+    <div class="card my-4">
+      <h5 class="card-header"><a href="{{obj.url}}">{{obj.title}}</a></h5>
+      <div class="card-body">
+        <p class="card-text">{{obj.description}}</p>
+        <p>{{obj.city.name}} | {{obj.language.name}} | {{obj.timestamp|date:"d-M-Y"}}</p>
+
+      </div>
+    </div>
+    {% empty %}
+    <p>Список вакансий пуст!</p>
+
+{% endfor %}
+{% endblock %}
