@@ -1,0 +1,60 @@
+[
+{
+  "model": "scraping.city",
+  "pk": 1,
+  "fields": {
+    "name": "\u0421\u0430\u0440\u0430\u0442\u043e\u0432",
+    "slug": "saratov"
+  }
+},
+{
+  "model": "scraping.city",
+  "pk": 3,
+  "fields": {
+    "name": "\u042d\u043d\u0433\u0435\u043b\u044c\u0441",
+    "slug": "engels"
+  }
+},
+{
+  "model": "scraping.language",
+  "pk": 1,
+  "fields": {
+    "name": "Python",
+    "slug": "python"
+  }
+},
+{
+  "model": "scraping.language",
+  "pk": 2,
+  "fields": {
+    "name": "Java",
+    "slug": "java"
+  }
+},
+{
+  "model": "scraping.vacancy",
+  "pk": 1,
+  "fields": {
+    "url": "https://rabota.ua/company598120/vacancy8306512",
+    "title": "Senior Python Engineer",
+    "company": "Neruk Irina",
+    "description": "Purpose of the job:We are transforming the email security landscape with the next-generation Secure Email Cloud powered by predictive AI. Leveraging data science and real-time intelligence from trillions of emails, we provide a suite of products that detect, defend, and deter costly advanced email attacks. We believe strongly in autonomy for our engineering team; in collaboration with the product owners and engineering colleagues, our engineers are empowered to make decisions about every aspect of our architecture and development process. The engineering organization is focused on creating robust, modern micro-services application implemented in Ruby and Python and deployed to AWS.\r\n\r\nWe are looking for a senior Python engineer, ideally with knowledge in JavaScript. You will be working with a phishing detection module, data aggregation, pagination and other features.MAIN TASKS AND RESPONSIBILITIES:\r\n\r\nWork, in a collaborative manner, with your product owner and scrum team to scope and prioritize feature requirements and engineering backlog.\r\nPractice secure development methodologies during design, implementation and maintenance of products and services.\r\nWork in close contact with team members and project stakeholders on the client\u2019s site\r\nTake an active role in architectural discussions\r\nEDUCATION, SKILLS AND EXPERIENCE:MUST HAVE:\r\n\r\n4+ years-experience with Python\r\nExperience in building reliable, high-available, distributed architectures\r\nExperience in Microservice architecture and its patterns\r\nHands on experience with Docker and Kubernetes\r\nExperience with Amazon Lambda and SQS\r\nStrong troubleshooting experience\r\nAt least intermediate English skills\r\nWOULD BE A PLUS:\r\n\r\nRuby and JavaScript familiarity\r\nExperience with Amazon Kinesis\r\nPrometheus and Graphana knowledge",
+    "city": 1,
+    "language": 1,
+    "timestamp": "2021-01-10T16:39:48.352Z"
+  }
+},
+{
+  "model": "scraping.vacancy",
+  "pk": 3,
+  "fields": {
+    "url": "https://rabota.ua/company472186/vacancy8234057",
+    "title": "Python-developer",
+    "company": "\u041f\u0440\u043e\u0424\u0438\u043a\u0441",
+    "description": "What you will do if you work in our Team:\r\n\r\nDevelopment of applications with low latency, high availability and performance (low-latency, high-availability, performance).\r\n\r\nIntegration of elements developed by the front-end team and user-oriented, with server-side logic (front-end component library).\r\n\r\nImplementation of information security tools, including the confidentiality of personal data (security and data protection).\r\n\r\nDevelopment of backend applications based on carefully thought-out specifications by analysts.\r\n\r\nWork with Django backend, for the most part with the Django REST Framework, MySQL is used as a database.",
+    "city": 3,
+    "language": 1,
+    "timestamp": "2021-01-11T15:08:19.990Z"
+  }
+}
+]
