@@ -1,7 +1,9 @@
+import asyncio
 import codecs
 import os
 import sys
 
+from django.contrib.auth import get_user_model
 from django.db import DatabaseError
 
 prg = os.path.dirname(os.path.abspath('manage.py'))
@@ -14,31 +16,81 @@ django.setup()
 
 from scraping.parser import *
 
-from scraping.models import City, Language, Vacancy
+from scraping.models import City, Language, Vacancy, Error, Url
 
+# функция и ключ для url к ней
 parser = (
-    (workSite, 'https://www.work.ua/ru/jobs-kyiv-python/'),
-    (rabotaSite, 'https://rabota.ua/zapros/python/киев'),
-    (djinni, 'https://djinni.co/jobs2/?category=python&location=kyiv&'),
-    (dou, 'https://jobs.dou.ua/vacancies/?city=Киев&category=Python')
+    (work, 'work'),
+    (rabota, 'rabota'),
+    (djinni, 'djinni'),
+    (dou, 'dou')
 )
-
-city = City.objects.filter(slug='kiev').first()
-language = Language.objects.filter(slug='python').first()
 jobs, errors = [], []
 
-for func, url in parser:
-    j, e = func(url)
-    jobs += j
-    errors += e
+User = get_user_model()
 
+# возвращает список уникальных пар
+def get_settings():
+    qs = User.objects.filter(sendemail=True).values()
+    setting_list = set((q['city_id'], q['language_id']) for q in qs)
+    return setting_list
+
+# возвращает список url для уникальных пар settings
+def get_urls(settings):
+    qs = Url.objects.all().values()
+    url_dct = {(q['city_id'], q['language_id']): q['url_data'] for q in qs}
+    urls = []
+    for pair in settings:
+        tmp = {'city': pair[0], 'language': pair[1], 'url_data': url_dct[pair]}
+        urls.append(tmp)
+    return urls
+
+
+async def main(value):
+    func, url, city, language = value
+    job, err = await loop.run_in_executor(None, func, url, city, language)
+    errors.extend(err)
+    jobs.extend(job)
+
+
+settings = get_settings()
+url_list = get_urls(settings)
+
+# создаем асинхнонную петлю
+loop = asyncio.get_event_loop()
+
+#создаем список задач
+tmp_task = [(func, data['url_data'][key], data['city'], data['language'])
+            for data in url_list
+            for func, key in parser]
+
+#отправляем список на выполнение
+tasks = asyncio.wait([loop.create_task(main(f)) for f in tmp_task])
+
+#for data in url_list:
+#    for func, key in parser:
+#        url = data['url_data'][key]
+#        j, e = func(url, city=data['city'], language=data['language'])
+#        jobs += j
+#        errors += e
+
+loop.run_until_complete(tasks)
+loop.close()
 
 for job in jobs:
-    v = Vacancy(**job,city=city, language=language)
+    v = Vacancy(**job)
     try:
         v.save()
     except DatabaseError:
         pass
+
+if errors:
+    er = Error(data=errors)
+    try:
+        er.save()
+    except DatabaseError:
+        pass
+
 
 h = codecs.open('work.txt', 'w', 'utf-8')
 h.write(str(jobs))

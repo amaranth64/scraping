@@ -3,7 +3,7 @@ from random import randint
 from bs4 import BeautifulSoup as BS
 import requests
 
-__all__ = ('workSite', 'rabotaSite', 'dou', 'djinni')
+__all__ = ('work', 'rabota', 'dou', 'djinni')
 
 header = [
     {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0',
@@ -17,7 +17,7 @@ header = [
 ]
 
 
-def workSite(url):
+def work(url, city=None, language=None):
     jobs = []
     errors = []
     domain = 'https://www.work.ua'
@@ -37,7 +37,8 @@ def workSite(url):
                     if logo:
                         company = logo['alt']
                     jobs.append({'title': title.text, 'url': domain + href,
-                                 'description': content, 'company': company})
+                                 'description': content, 'company': company,
+                                 'city_id': city, 'language_id': language})
             else:
                 errors.append({'url': url, 'title': "Div does not exists"})
         else:
@@ -46,7 +47,7 @@ def workSite(url):
     return jobs, errors
 
 
-def rabotaSite(url):
+def rabota(url, city=None, language=None):
     jobs = []
     errors = []
     domain = 'https://rabota.ua'
@@ -75,7 +76,8 @@ def rabotaSite(url):
                                 'title': title.text,
                                 'url': domain + href,
                                 'description': content,
-                                'company': company})
+                                'company': company,
+                                'city_id': city, 'language_id': language})
                 else:
                     errors.append({'url': url, 'title': "Table does not exists"})
             else:
@@ -86,7 +88,7 @@ def rabotaSite(url):
     return jobs, errors
 
 
-def dou(url):
+def dou(url, city=None, language=None):
     jobs = []
     errors = []
     # domain = 'https://jobs.dou.ua/'
@@ -107,7 +109,8 @@ def dou(url):
                     if a:
                         company = a.text
                     jobs.append({'title': title.text, 'url': href,
-                                 'description': content, 'company': company})
+                                 'description': content, 'company': company,
+                                 'city_id': city, 'language_id': language})
             else:
                 errors.append({'url': url, 'title': "Div does not exists"})
         else:
@@ -116,7 +119,7 @@ def dou(url):
     return jobs, errors
 
 
-def djinni(url):
+def djinni(url, city=None, language=None):
     jobs = []
     errors = []
     domain = 'https://djinni.co'
@@ -144,7 +147,8 @@ def djinni(url):
                             content = result.text
 
                     jobs.append({'title': title.text, 'url': domain + href,
-                                 'description': content, 'company': company})
+                                 'description': content, 'company': company,
+                                 'city_id': city, 'language_id': language})
 
             else:
                 errors.append({'url': url, 'title': "Section does not exists"})
@@ -155,8 +159,6 @@ def djinni(url):
 
 
 if __name__ == '__main__':
-    #url = 'https://djinni.co/jobs2/?category=python&location=kyiv&'
-    #'https://djinni.co/jobs/?location=%D0%9A%D0%B8%D0%B5%D0%B2&primary_keyword=Python'
     url = 'https://jobs.dou.ua/vacancies/?city=Киев&category=Python'
     jobs, errors = dou(url)
     h = codecs.open('work.txt', 'w', 'utf-8')
