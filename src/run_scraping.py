@@ -92,10 +92,10 @@ if errors:
         pass
 
 
-h = codecs.open('work.txt', 'w', 'utf-8')
-h.write(str(jobs))
-h.close()
-
-h = codecs.open('errors.txt', 'w', 'utf-8')
-h.write(str(errors))
-h.close()
+# h = codecs.open('work.txt', 'w', 'utf-8')
+# h.write(str(jobs))
+# h.close()
+#
+# h = codecs.open('errors.txt', 'w', 'utf-8')
+# h.write(str(errors))
+# h.close()
