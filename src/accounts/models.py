@@ -46,7 +46,7 @@ class MyUser(AbstractBaseUser):
 
     city = models.ForeignKey('scraping.City', on_delete=models.SET_NULL, null=True, blank=True)
     language = models.ForeignKey('scraping.Language', on_delete=models.SET_NULL, null=True, blank=True)
-    sendemail = models.BooleanField(default=True)
+    send_email = models.BooleanField(default=True)
 
     objects = MyUserManager()
 
