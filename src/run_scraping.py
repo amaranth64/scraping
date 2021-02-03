@@ -31,7 +31,7 @@ User = get_user_model()
 
 # возвращает список уникальных пар
 def get_settings():
-    qs = User.objects.filter(sendemail=True).values()
+    qs = User.objects.filter(send_email=True).values()
     setting_list = set((q['city_id'], q['language_id']) for q in qs)
     return setting_list
 

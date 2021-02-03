@@ -41,6 +41,8 @@ def update_view(request):
 
     if request.user.is_authenticated:
         user = request.user
+
+        # если нажали сохранить
         if request.method == 'POST':
             form = UserUpdateForm(request.POST)
             if form.is_valid():
