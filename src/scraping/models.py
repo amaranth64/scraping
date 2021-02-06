@@ -47,7 +47,7 @@ class Vacancy(models.Model):
     description = models.TextField(verbose_name="Описание")
     city = models.ForeignKey('City', on_delete=models.CASCADE, verbose_name="Город")
     language = models.ForeignKey("Language", on_delete=models.CASCADE, verbose_name="Язык программирования")
-    timestamp = models.DateTimeField(auto_now_add=True)
+    timestamp = models.DateField(auto_now_add=True)
 
     class Meta:
         verbose_name = 'Вакансия'
@@ -62,6 +62,9 @@ class Vacancy(models.Model):
 class Error(models.Model):
     timestamp = models.DateField(auto_now_add=True)
     data = jsonfield.JSONField()
+
+    def __str__(self):
+        return str(self.timestamp)
 
 
 def default_url():

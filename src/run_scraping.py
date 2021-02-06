@@ -3,6 +3,7 @@ import codecs
 import os
 import sys
 
+import datetime as dt
 from django.contrib.auth import get_user_model
 from django.db import DatabaseError
 
@@ -41,8 +42,9 @@ def get_urls(settings):
     url_dct = {(q['city_id'], q['language_id']): q['url_data'] for q in qs}
     urls = []
     for pair in settings:
-        tmp = {'city': pair[0], 'language': pair[1], 'url_data': url_dct[pair]}
-        urls.append(tmp)
+        if pair in url_dct:
+            tmp = {'city': pair[0], 'language': pair[1], 'url_data': url_dct[pair]}
+            urls.append(tmp)
     return urls
 
 
@@ -85,11 +87,20 @@ for job in jobs:
         pass
 
 if errors:
-    er = Error(data=errors)
-    try:
-        er.save()
-    except DatabaseError:
-        pass
+    qs = Error.objects.filter(timestamp=dt.date.today())
+    if qs.exists():
+        err = qs.first()
+        try:
+            err.data.update({'errors':errors})
+            err.save()
+        except DatabaseError:
+            pass
+    else:
+        try:
+            er = Error(data=f'errors').save
+        except DatabaseError:
+            pass
+
 
 
 # h = codecs.open('work.txt', 'w', 'utf-8')
