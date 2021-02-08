@@ -1,2 +1,2 @@
-/src/scraping_service/.env
 /src/scraping_service/settings/local_settings.py
+/src/scraping_service/.env
