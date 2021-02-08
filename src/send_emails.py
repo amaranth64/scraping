@@ -8,8 +8,6 @@ from django.core.mail import EmailMultiAlternatives
 from scraping_service.settings import EMAIL_HOST_USER
 
 from django.contrib.auth import get_user_model
-from django.db import DatabaseError
-
 
 prg = os.path.dirname(os.path.abspath('manage.py'))
 sys.path.append(prg)
@@ -65,12 +63,13 @@ text_content = ''
 _html = ''
 if qs.exists():
     error = qs.first()
-    data = error.data['errors']
+    data = error.data.get('errors',[])
+
     for i in data:
         _html += f'<h5> <a href="{ i["url"] }"> Error: {i["title"]} </h5>'
     subject = f'ОШИБКИ СКРАППИНГА {today}'
     text_content = 'Ошибки'
-    data = error.data['user_data']
+    data = error.data.get('user_data')
     if data:
         _html += '<hr> <h2>Пожелания пользователей</h2>'
     for i in data:

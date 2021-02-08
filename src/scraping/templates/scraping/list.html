@@ -15,42 +15,12 @@
         </div>
     </div>
 
+
+
+
     {% if object_list %}
-    <div class="row my-4">
-        <div class="col">
-
-            <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                  {% if object_list.has_previous %}
-                    <li class="page-item">
-
-                        <a class="page-link" href="?page={{ object_list.previous_page_number }}
-                                    &city={{city}}&language{{language}}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                  {% endif %}
-
-                  {% for page in object_list.paginator.page_range %}
-                    <li class="page-item {% if page == object_list.number %} active {% endif %} ">
-                        <a class="page-link" href="?page={{page}}&city={{city}}&language{{language}}">{{page}}</a>
-                    </li>
-                  {% endfor %}
-
-
-                {% if object_list.has_next %}
-                <li class="page-item">
-                    <a class="page-link"
-                       href="?page={{object_list.next_page_number}}&city={{city}}&language{{language}}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-                {% endif %}
-
-              </ul>
-            </nav>
-
-        </div>
+    <div class="alert alert-success my-4 mx-auto col-md-6" role="alert">
+          <h4 class="alert-heading">Результаты поиска</h4>
     </div>
     {% endif%}
 
@@ -71,6 +41,8 @@
             <p class="mb-0">Список вакансий пуст!</p>
         </div>
     {% endfor %}
+
+
 
     {% if object_list %}
     <div class="row">
