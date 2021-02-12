@@ -82,7 +82,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'scraping_service.wsgi.application'
+WSGI_APPLICATION = 'scrapping_service.wsgi.application'
 
 
 # Database
