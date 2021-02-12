@@ -1,12 +1,13 @@
-from django.contrib import messages
+import datetime as dt
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
-from accounts.forms import UserLoginForm, UserRegistrationForm, UserUpdateForm, ContactForm
+from django.contrib import messages
+
+from accounts.forms import UserLoginForm, UserRegistrationForm, UserUpdateForm, \
+    ContactForm
 from scraping.models import Error
-import datetime as dt
 
 User = get_user_model()
-
 
 def login_view(request):
     form = UserLoginForm(request.POST or None)
@@ -32,17 +33,15 @@ def register_view(request):
         new_user.set_password(form.cleaned_data['password'])
         new_user.save()
         messages.success(request, 'Пользователь добавлен в систему.')
-        return render(request, 'accounts/register_done.html', {'new_user': new_user})
+        return render(request, 'accounts/register_done.html',
+                      {'new_user': new_user})
     return render(request, 'accounts/register.html', {'form': form})
 
 
 def update_view(request):
     contact_form = ContactForm()
-
     if request.user.is_authenticated:
         user = request.user
-
-        # если нажали сохранить
         if request.method == 'POST':
             form = UserUpdateForm(request.POST)
             if form.is_valid():
@@ -54,8 +53,9 @@ def update_view(request):
                 messages.success(request, 'Данные сохраненны.')
                 return redirect('accounts:update')
 
-        form = UserUpdateForm(initial={'city': user.city, 'language': user.language,
-                                       'send_email': user.send_email})
+        form = UserUpdateForm(
+            initial={'city': user.city, 'language': user.language,
+                     'send_email': user.send_email})
         return render(request, 'accounts/update.html',
                       {'form': form, 'contact_form': contact_form})
     else:

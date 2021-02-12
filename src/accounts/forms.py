@@ -28,12 +28,12 @@ class UserLoginForm(forms.Form):
 
 
 class UserRegistrationForm(forms.ModelForm):
-    email = forms.EmailField(label='Введите email',
-                             widget=forms.EmailInput(attrs={'class': 'form-control'}))
+    email = forms.EmailField(label='Введите имэйл',
+        widget=forms.EmailInput(attrs={'class': 'form-control'}))
     password = forms.CharField(label='Введите пароль',
-                               widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}))
     password2 = forms.CharField(label='Введите пароль ещё раз',
-                                widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+        widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
     class Meta:
         model = User
@@ -75,6 +75,6 @@ class ContactForm(forms.Form):
         label='Специальность'
     )
     email = forms.EmailField(
-        label='Введите email', required=True, widget=forms.EmailInput(
+        label='Введите имэйл', required=True, widget=forms.EmailInput(
                                  attrs={'class': 'form-control'})
     )

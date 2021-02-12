@@ -1,9 +1,8 @@
-@font-face{
+@font-face {
     font-family: WendyOne;
     src: url(../fonts/WendyOne-Regular.ttf);
 }
-
-#brand{
+#brand {
     font-family: WendyOne;
     color: #FFF;
 }
